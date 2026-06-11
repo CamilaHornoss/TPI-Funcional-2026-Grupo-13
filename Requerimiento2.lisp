@@ -64,8 +64,3 @@
 ;; Ejemplo que genera error controlado:
 ;; (timer 'Rojo)
 ;;Resultado esperado: Error
-
-
-
-;; Resultado esperado: ER
-))
