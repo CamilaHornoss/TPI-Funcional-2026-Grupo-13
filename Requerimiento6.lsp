@@ -22,8 +22,8 @@
 			;;para asi saber cuanto dura un ciclo entero. 
 ;; ========================================================
 
-(defun sumaTiempo (t_rojo t_amarillo t_verde)
-	(+ t_rojo t_amarillo t_verde)
+(defun sumaTiempo (t_rojo t_verde t_amarillo)
+	(+ t_rojo t_verde t_amarillo)
 )
 
 ;; ========================================================
@@ -39,11 +39,11 @@
 			;;Por ultimo se devuelven una lista para cada color de semaforo que incluye el color y el porcentaje que representa
 ;; ========================================================
 
-(defun porcentajeColores (t_rojo t_amarillo t_verde)
+(defun porcentajeColores (t_rojo t_verde t_amarillo)
 	(list 
-		(list 'Rojo (float(* (/ t_rojo (sumaTiempo t_rojo t_amarillo t_verde)) 100)))
-		(list 'Amarillo (float(* (/ t_amarillo (sumaTiempo t_rojo t_amarillo t_verde)) 100)))
-		(list 'Verde (float(* (/ t_verde (sumaTiempo t_rojo t_amarillo t_verde)) 100)))
+		(list 'Rojo (float(* (/ t_rojo (sumaTiempo t_rojo t_verde t_amarillo)) 100)))
+		(list 'Verde (float(* (/ t_verde (sumaTiempo t_rojo t_verde t_amarillo)) 100)))
+		(list 'Amarillo (float(* (/ t_amarillo (sumaTiempo t_rojo t_verde t_amarillo)) 100)))
 	)
 )
 
@@ -59,12 +59,12 @@
 			;;procedimiento, se ejecutara la funcion porcentajeColores. 
 ;; ========================================================
 
-(defun verificaciones(t_rojo t_amarillo t_verde)
+(defun verificaciones(t_rojo t_verde t_amarillo)
 	(cond
-		((or (not (numberp t_rojo)) (not (numberp t_amarillo)) (not (numberp t_verde))) 
+		((or (not (numberp t_rojo)) (not (numberp t_verde)) (not (numberp t_amarillo))) 
 			'Error-Duracion-No-Numerica)
-		((/= (sumaTiempo t_rojo t_amarillo t_verde) 216) 'Ciclos-Desincronizados)
-		((and (numberp t_rojo) (numberp t_amarillo) (numberp t_verde)) 
-			(porcentajeColores t_rojo t_amarillo t_verde))
+		((/= (sumaTiempo t_rojo t_verde t_amarillo) 216) 'Ciclos-Desincronizados)
+		((and (numberp t_rojo) (numberp t_verde) (numberp t_amarillo)) 
+			(porcentajeColores t_rojo t_verde t_amarillo))
 	)
 )
