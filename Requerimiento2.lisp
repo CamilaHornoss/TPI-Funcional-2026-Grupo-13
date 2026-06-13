@@ -16,7 +16,7 @@
 (defun timer (tiempo) 
 
       (cond 
-           ((not(and(integerp tiempo)(>= tiempo 0))) 'Error)
+           ((not (and (integerp tiempo) (>= tiempo 0))) 'Error) 
            ((< (mod tiempo 216) 90) 'en-Rojo) 
            ((< (mod tiempo 216) 210) 'en-Verde) 
            (t 'en-Amarillo))
