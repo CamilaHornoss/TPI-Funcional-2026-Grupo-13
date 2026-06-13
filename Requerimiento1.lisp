@@ -19,15 +19,15 @@
 
      (cond  
 
-           ((and(equal color-Actual 'en-Rojo)(equal cambiar-A 'Amarillo)) 
+           ((and(equal color-Actual 'en-Rojo)(equal cambiar-A 'Verde)) 
 
-                 (list color-Actual "cambiar-a-Amarillo")) 
+                 (list color-Actual "cambiar-a-Verde")) 
 
-            ((and (equal color-Actual 'en-Amarillo)(equal cambiar-A 'Verde)) 
+            ((and (equal color-Actual 'en-Verde)(equal cambiar-A 'Amarillo)) 
 
-                  (list color-Actual "cambiar-a-Verde")) 
+                  (list color-Actual "cambiar-a-Amarillo")) 
 
-             ((and (equal color-Actual 'en-Verde)(equal cambiar-A 'Rojo)) 
+             ((and (equal color-Actual 'en-Amarillo)(equal cambiar-A 'Rojo)) 
 
                    (list color-Actual "cambiar-a-Rojo")) 
 
@@ -37,24 +37,24 @@
 ;; EJEMPLOS DE USO DE LA FUNCION TRANSICION
 ;; ========================================================
 
-;; Cambio normal de rojo a amarillo:
-;; (transicion 'en-rojo 'amarillo)
-;; Resultado esperado: (EN-ROJO CAMBIAR-A-AMARILLO)
+;; Cambio normal de rojo a verde:
+;; (transicion 'en-rojo 'Verde)
+;; Resultado esperado: (EN-ROJO CAMBIAR-A-VERDE)
 
-;; Cambio normal de amarillo a verde:
-;; (transicion 'en-amarillo 'verde)
-;; Resultado esperado: (EN-AMARILLO CAMBIAR-A-VERDE)
+;; Cambio normal de verde a amarillo:
+;; (transicion 'en-Verde 'Amarillo)
+;; Resultado esperado: (EN-VERDE CAMBIAR-A-AMARILLO)
 
-;; Cambio normal de verde a rojo:
-;; (transicion 'en-verde 'rojo)
-;; Resultado esperado: (EN-VERDE CAMBIAR-A-ROJO)
+;; Cambio normal de amarillo a rojo:
+;; (transicion 'en-amarillo 'Rojo)
+;; Resultado esperado: (EN-AMARILLO CAMBIAR-A-ROJO)
 
 ;; Cambio no permitido:
-;; (transicion 'en-rojo 'verde)
+;; (transicion 'en-rojo 'amarillo)
 ;; Resultado esperado: (EN-ROJO ACCION-POR-DEFECTO)
 
 ;; Estado no reconocido:
-;; (transicion 'celeste 'rojo)
+;; (transicion 'celeste 'Rojo)
 ;; Resultado esperado: (CELESTE ACCION-POR-DEFECTO)
 
     
