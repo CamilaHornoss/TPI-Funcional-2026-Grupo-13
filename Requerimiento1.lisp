@@ -31,7 +31,7 @@
 
                    (list color-Actual "cambiar-a-Rojo")) 
 
-             (t(list color-actual 'accion-por-defecto))) 
+             (t(list color-Actual "accion-por-defecto"))) 
      )
 ;; ========================================================
 ;; EJEMPLOS DE USO DE LA FUNCION TRANSICION
@@ -39,15 +39,15 @@
 
 ;; Cambio normal de rojo a verde:
 ;; (transicion 'en-rojo 'Verde)
-;; Resultado esperado: (EN-ROJO CAMBIAR-A-VERDE)
+;; Resultado esperado: (EN-ROJO "cambiar-a-Verde")
 
 ;; Cambio normal de verde a amarillo:
 ;; (transicion 'en-Verde 'Amarillo)
-;; Resultado esperado: (EN-VERDE CAMBIAR-A-AMARILLO)
+;; Resultado esperado: (EN-VERDE "cambiar-a-Amarillo")
 
 ;; Cambio normal de amarillo a rojo:
 ;; (transicion 'en-amarillo 'Rojo)
-;; Resultado esperado: (EN-AMARILLO CAMBIAR-A-ROJO)
+;; Resultado esperado: (EN-AMARILLO "cambiar-a-Rojo")
 
 ;; Cambio no permitido:
 ;; (transicion 'en-rojo 'amarillo)
