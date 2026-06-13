@@ -15,7 +15,7 @@
 ;;COND devuelve una lista con el estado actual y la accion por defecto.
 ;; ========================================================
 
-(defun transicion (color-Actual cambiar-a) 
+(defun transicion (color-Actual cambiar-A) 
 
      (cond  
 
