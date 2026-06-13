@@ -9,8 +9,9 @@
 ;; ESTRATEGIA DE CONTROL: Función simple
 ;; IMPACTO EN MEMORIA: No destructiva
 ;; PROPÓSITO:
-;; Calcular la duración total de un ciclo completo del
-;; semáforo, sumando los tiempos de rojo, amarillo y verde.
+;; Calcular la duración total de un ciclo completo:
+;; rojo → verde → amarillo.
+;; El ciclo finaliza al terminar el estado amarillo.
 ;; ========================================================
 (defun duracion-ciclo (&optional
                        (tiempo-rojo 90)
