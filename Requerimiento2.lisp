@@ -18,8 +18,8 @@
       (cond 
            ((not(numberp tiempo)) 'Error)
            ((< (mod tiempo 216) 90) 'en-rojo) 
-           ((< (mod tiempo 216) 96) 'en-amarillo) 
-           (t 'en-verde))
+           ((< (mod tiempo 216) 210) 'en-Verde) 
+           (t 'en-Amarillo))
       )
 ;; ========================================================
 ;; EJEMPLOS DE USO DE TIMER
@@ -33,21 +33,25 @@
 ;; (timer 89)
 ;; Resultado esperado: EN-ROJO
 
-;; Primer valor del intervalo amarillo:
-;; (timer 90)
-;; Resultado esperado: EN-AMARILLO
-
-;; Último valor del intervalo amarillo:
-;; (timer 95)
-;; Resultado esperado: EN-AMARILLO
-
 ;; Primer valor del intervalo verde:
-;; (timer 96)
+;; (timer 90)
 ;; Resultado esperado: EN-VERDE
 
 ;; Tiempo dentro del intervalo verde:
 ;; (timer 145)
 ;; Resultado esperado: EN-VERDE
+
+;; Último valor del intervalo verde:
+;; (timer 209)
+;; Resultado esperado: EN-VERDE
+
+;; Primer valor del intervalo  amarillo:
+;; (timer 210)
+;; Resultado esperado: EN-AMARILLO
+
+;; Tiempo dentro del intervalo amarillo:
+;; (timer 213)
+;; Resultado esperado: EN-AMARILLO
 
 ;; Inicio de un nuevo ciclo:
 ;; (timer 216)
