@@ -9,15 +9,15 @@
 ;; del semaforo dentro de un ciclo de 216 segundos.
 ;; El calculo se realiza mediante la operación módulo y,
 ;; según el intervalo correspondiente, devuelve EN-ROJO, 
-;; EN-AMARILLO o EN-VERDE.Dicho ciclo se repite indefinidamente
+;; EN-VERDE o EN-AMARILLO.Dicho ciclo se repite indefinidamente
 ;; cada 216 segundos.
 ;; ========================================================
 
 (defun timer (tiempo) 
 
       (cond 
-           ((not(numberp tiempo)) 'Error)
-           ((< (mod tiempo 216) 90) 'en-rojo) 
+           ((not(and(integerp tiempo)(>= tiempo 0))) 'Error)
+           ((< (mod tiempo 216) 90) 'en-Rojo) 
            ((< (mod tiempo 216) 210) 'en-Verde) 
            (t 'en-Amarillo))
       )
