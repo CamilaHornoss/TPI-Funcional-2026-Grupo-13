@@ -5,7 +5,6 @@
 ;; IMPORTANTE:
 ;; Este requerimiento utiliza la función DURACION-CICLO,
 ;; definida en el archivo del Requerimiento 4.
-;; Por ese motivo debe cargarse primero requerimiento4.lsp.
 
 
 ;; ========================================================
