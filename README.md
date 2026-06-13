@@ -1,5 +1,26 @@
 # TPI Funcional 2026 - Grupo 13
 
+# Smart Traffic Light System
+
+Functional Programming Integrative Project developed in Common Lisp, with `local-time` integration and a comparative implementation in Scala.
+
+
+
+
+<p align="center">
+
+![Common Lisp](https://img.shields.io/badge/Common%20Lisp-2D2D2D?style=for-the-badge&logo=commonlisp&logoColor=white)
+![Scala](https://img.shields.io/badge/Scala-DC322F?style=for-the-badge&logo=scala&logoColor=white)
+![Quicklisp](https://img.shields.io/badge/Quicklisp-6C63FF?style=for-the-badge)
+![local-time](https://img.shields.io/badge/local--time-00897B?style=for-the-badge)
+![Academic Project](https://img.shields.io/badge/Academic%20Project-2026-1565C0?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-In%20Progress-F9A825?style=for-the-badge)
+
+</p>
+
+
+
+
 ## Sistema de Semáforos Inteligentes
 
 Trabajo Práctico Integrador desarrollado para la materia **Paradigmas y Lenguajes**.
@@ -27,7 +48,19 @@ El sistema incluye los siguientes requerimientos:
 
 El ciclo semafórico implementado es:
 
-`rojo → verde → amarillo`
+`rojo → verde → amarillo` 
+
+```mermaid
+flowchart LR
+    A[🔴 Rojo<br>90 segundos] --> B[🟢 Verde<br>120 segundos]
+    B --> C[🟡 Amarillo<br>6 segundos]
+    C --> D[Ciclo completo<br>216 segundos]
+    D --> A
+````
+
+---
+
+
 
 El ciclo comienza en rojo y finaliza al terminar el estado amarillo.
 
