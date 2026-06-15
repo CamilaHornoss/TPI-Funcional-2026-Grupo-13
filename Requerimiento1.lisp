@@ -5,14 +5,14 @@
 ;; ========================================================
 ;; FUNCIÓN: transicion
 ;; NATURALEZA: Pura
-;; ESTRATEGIA DE CONTROL: Eleccion multiple mediante el uso del condicional COND
+;; ESTRATEGIA DE CONTROL: Elección múltiple mediante el uso del condicional COND
 ;; IMPACTO EN MEMORIA: No destructiva
 ;; PROPÓSITO:
-;;La funcion tiene como proposito determinar la accion a realizar
+;;La función tiene como propósito determinar la acción a realizar
 ;;en base a su estado actual y al estado al que se quiere cambiar.
-;;La misma, nos devuelve una lista con el estado actual y la accion a realizar,
-;;si dicha accion no esta definida dentro de las opciones disponible en el 
-;;COND devuelve una lista con el estado actual y la accion por defecto.
+;;La misma nos devuelve una lista con el estado actual y la acción a realizar,
+;;si dicha acción no está definida dentro de las opciones disponibles en el 
+;;COND devuelve una lista con el estado actual y la acción por defecto.
 ;; ========================================================
 
 (defun transicion (color-Actual cambiar-A) 
@@ -34,7 +34,7 @@
              (t(list color-Actual "accion-por-defecto"))) 
      )
 ;; ========================================================
-;; EJEMPLOS DE USO DE LA FUNCION TRANSICION
+;; EJEMPLOS DE USO DE LA FUNCIÓN TRANSICION
 ;; ========================================================
 
 ;; Cambio normal de rojo a verde:
@@ -51,11 +51,11 @@
 
 ;; Cambio no permitido:
 ;; (transicion 'en-rojo 'amarillo)
-;; Resultado esperado: (EN-ROJO ACCION-POR-DEFECTO)
+;; Resultado esperado: (EN-ROJO "accion-por-defecto")
 
 ;; Estado no reconocido:
 ;; (transicion 'celeste 'Rojo)
-;; Resultado esperado: (CELESTE ACCION-POR-DEFECTO)
+;; Resultado esperado: (CELESTE "accion-por-defecto")
 
     
 
