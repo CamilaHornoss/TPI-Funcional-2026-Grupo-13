@@ -1,79 +1,254 @@
 ;; ========================================================
-;; REQUERIMIENTO 6:  Informe de Distribución Temporal
+;; REQUERIMIENTO 6: INFORME DE DISTRIBUCIÓN TEMPORAL
+;; ITERACIÓN 2: INTERMITENCIA DE SEGURIDAD
 ;; ========================================================
 
-;; ========================================================
-;;	DATOS NUMERICOS
-;;90seg Rojo - Porcentaje en una hora: 41,66%
-;;6seg Amarillo - Porcentaje en una hora: 2,77%
-;;120seg Verde - Porcentaje en una hora: 55,55%
-;;Total = 216seg(3:36min)
-;;1 hora = 60 min = 3600 seg
-;; ========================================================
-
-
-
-;; ========================================================
-;; FUNCIÓN: sumaTiempo
-;; NATURALEZA: Pura 
-;; ESTRATEGIA: Suma los parametros temporales
-;; IMPACTO: No destructiva
-;; PROPOSITO: Su funcion es sumar el tiempo en segundos de cada color de semaforo
-			;;para asi saber cuanto dura un ciclo entero. 
-;; ========================================================
-
-
-
-(defun sumaTiempo (t_rojo t_verde t_amarillo t_intermitente)
-  (+ t_rojo t_verde t_amarillo (* 3 t_intermitente)))
+;; Con las reglas actuales:
+;; Rojo: 90 segundos
+;; Verde: 120 segundos
+;; Amarillo: 6 segundos
+;; Amarillo intermitente: 3 intervalos de 3 segundos
+;; Duración total: 225 segundos
+;;
+;; En una hora se completan exactamente 16 ciclos:
+;; 3600 / 225 = 16
 
 
 ;; ========================================================
-;; FUNCIÓN: porcentajeColores
-;; NATURALEZA: Pura 
-;; ESTRATEGIA: Realiza operaciones que se mostraran en las sublistas de la lista
-;; IMPACTO: No destructiva
-;; PROPOSITO: Su funcion es obtener el porcentaje de duracion de cada uno de los 
-			;;colores del semaforo. 
-			;;Para ello se requiere la funcion sumaTiempo que posee la duracion total del ciclo
-			;;Se divide el tiempo total con el de cada color y se multiplica para obtener el porcentaje
-			;;El float se encarga de devolvernos numeros decimales y no fraccionarios
-			;;Por ultimo se devuelven una lista para cada color de semaforo que incluye el color y el porcentaje que representa
+;; FUNCIÓN: suma-tiempo
+;; NATURALEZA: Pura
+;; ESTRATEGIA DE CONTROL: Función simple
+;; IMPACTO EN MEMORIA: No destructiva
+;; PROPÓSITO:
+;; Calcular la duración total del ciclo, incluyendo los tres
+;; intervalos de amarillo intermitente.
 ;; ========================================================
 
+(defun suma-tiempo
+       (tiempo-rojo
+        tiempo-verde
+        tiempo-amarillo
+        tiempo-intermitencia)
 
-(defun porcentajeColores (t_rojo t_verde t_amarillo t_intermitente)
-  
-  (let ((total (sumaTiempo t_rojo t_verde t_amarillo t_intermitente)))
-    (list 
-      (list 'Rojo (float (* (/ t_rojo total) 100)))
-      (list 'Verde (float (* (/ t_verde total) 100)))
-      (list 'Amarillo (float (* (/ t_amarillo total) 100)))
-      (list 'Amarillo-Intermitente (float (* (/ (* 3 t_intermitente) total) 100))))))
-      
+  (+ tiempo-rojo
+     tiempo-verde
+     tiempo-amarillo
+     (* 3 tiempo-intermitencia)))
+
+
+;; ========================================================
+;; FUNCIÓN: distribucion-una-hora
+;; NATURALEZA: Pura
+;; ESTRATEGIA DE CONTROL: Función no recursiva con LET*
+;; IMPACTO EN MEMORIA: No destructiva
+;; PROPÓSITO:
+;; Calcular los segundos correspondientes a cada estado
+;; durante una hora, incluyendo los ciclos completos y el
+;; posible tiempo restante.
+;; El período comienza en el estado rojo.
+;; ========================================================
+
+(defun distribucion-una-hora
+       (tiempo-rojo
+        tiempo-verde
+        tiempo-amarillo
+        tiempo-intermitencia)
+
+  (let* ((duracion-total
+           (suma-tiempo
+            tiempo-rojo
+            tiempo-verde
+            tiempo-amarillo
+            tiempo-intermitencia))
+
+         (cantidad-ciclos
+           (floor (/ 3600 duracion-total)))
+
+         (tiempo-restante
+           (mod 3600 duracion-total))
+
+         ;; Rojo.
+         (extra-rojo
+           (min tiempo-restante tiempo-rojo))
+
+         (resto-1
+           (max 0
+                (- tiempo-restante tiempo-rojo)))
+
+         ;; Primera intermitencia.
+         (extra-intermitente-1
+           (min resto-1 tiempo-intermitencia))
+
+         (resto-2
+           (max 0
+                (- resto-1 tiempo-intermitencia)))
+
+         ;; Verde.
+         (extra-verde
+           (min resto-2 tiempo-verde))
+
+         (resto-3
+           (max 0
+                (- resto-2 tiempo-verde)))
+
+         ;; Segunda intermitencia.
+         (extra-intermitente-2
+           (min resto-3 tiempo-intermitencia))
+
+         (resto-4
+           (max 0
+                (- resto-3 tiempo-intermitencia)))
+
+         ;; Amarillo.
+         (extra-amarillo
+           (min resto-4 tiempo-amarillo))
+
+         (resto-5
+           (max 0
+                (- resto-4 tiempo-amarillo)))
+
+         ;; Tercera intermitencia.
+         (extra-intermitente-3
+           (min resto-5 tiempo-intermitencia))
+
+         (total-rojo
+           (+ (* cantidad-ciclos tiempo-rojo)
+              extra-rojo))
+
+         (total-verde
+           (+ (* cantidad-ciclos tiempo-verde)
+              extra-verde))
+
+         (total-amarillo
+           (+ (* cantidad-ciclos tiempo-amarillo)
+              extra-amarillo))
+
+         (total-intermitente
+           (+ (* cantidad-ciclos
+                 (* 3 tiempo-intermitencia))
+              extra-intermitente-1
+              extra-intermitente-2
+              extra-intermitente-3)))
+
+    (list total-rojo
+          total-verde
+          total-amarillo
+          total-intermitente)))
+
+
+;; ========================================================
+;; FUNCIÓN: porcentaje-colores
+;; NATURALEZA: Pura
+;; ESTRATEGIA DE CONTROL: Composición funcional
+;; IMPACTO EN MEMORIA: No destructiva
+;; PROPÓSITO:
+;; Calcular el porcentaje exacto que representa cada estado
+;; del semáforo durante una hora.
+;; ========================================================
+
+(defun porcentaje-colores
+       (tiempo-rojo
+        tiempo-verde
+        tiempo-amarillo
+        tiempo-intermitencia)
+
+  (let ((distribucion
+          (distribucion-una-hora
+           tiempo-rojo
+           tiempo-verde
+           tiempo-amarillo
+           tiempo-intermitencia)))
+
+    (list
+     (list 'rojo
+           (* (/ (first distribucion) 3600.0)
+              100))
+
+     (list 'verde
+           (* (/ (second distribucion) 3600.0)
+              100))
+
+     (list 'amarillo
+           (* (/ (third distribucion) 3600.0)
+              100))
+
+     (list 'amarillo-intermitente
+           (* (/ (fourth distribucion) 3600.0)
+              100)))))
+
 
 ;; ========================================================
 ;; FUNCIÓN: verificaciones
-;; NATURALEZA: Pura 
-;; ESTRATEGIA: Determina que pasos llevar a cabo mediante el condicional Cond
-;; IMPACTO: No destructiva
-;; PROPOSITO: En base a los posibles errores que puedan presentarse con el tiempo de los semaforos,
-			;;como que el tiempo no sea numerico o que la suma del tiempo no sea exacta, se devolveran
-			;;determinados mensajes. Y en caso de que se cumplan las condiciones para llevar a cabo el 
-			;;procedimiento, se ejecutara la funcion porcentajeColores. 
+;; NATURALEZA: Pura
+;; ESTRATEGIA DE CONTROL: Función no recursiva con COND
+;; IMPACTO EN MEMORIA: No destructiva
+;; PROPÓSITO:
+;; Validar los tiempos ingresados y calcular la distribución
+;; porcentual durante una hora.
 ;; ========================================================
 
+(defun verificaciones
+       (tiempo-rojo
+        tiempo-verde
+        tiempo-amarillo
+        &optional
+        (tiempo-intermitencia 3))
 
-(defun verificaciones (t_rojo t_verde t_amarillo &optional (t_intermitente 3))
   (cond
-    ((or (not (numberp t_rojo)) 
-         (not (numberp t_verde)) 
-         (not (numberp t_amarillo))
-         (not (numberp t_intermitence (if (boundp 't_intermitente) t_intermitente 3)))) 
-     'Error-Duracion-No-Numerica)
-    
-    ((/= (sumaTiempo t_rojo t_verde t_amarillo t_intermitente) 225) 
-     'Ciclos-Desincronizados)
-    
-    (t 
-     (porcentajeColores t_rojo t_verde t_amarillo t_intermitente))))
+    ((or (not (realp tiempo-rojo))
+         (not (realp tiempo-verde))
+         (not (realp tiempo-amarillo))
+         (not (realp tiempo-intermitencia)))
+     'error-duracion-no-numerica)
+
+    ((or (<= tiempo-rojo 0)
+         (<= tiempo-verde 0)
+         (<= tiempo-amarillo 0)
+         (<= tiempo-intermitencia 0))
+     'error-duracion-no-positiva)
+
+    (t
+     (porcentaje-colores
+      tiempo-rojo
+      tiempo-verde
+      tiempo-amarillo
+      tiempo-intermitencia))))
+
+
+;; ========================================================
+;; EJEMPLOS DE USO DEL REQUERIMIENTO 6
+;; ========================================================
+
+;; Distribución en segundos con las reglas actuales:
+;;
+;; (distribucion-una-hora 90 120 6 3)
+;;
+;; Resultado esperado:
+;; (1440 1920 96 144)
+
+
+;; Porcentajes durante una hora:
+;;
+;; (verificaciones 90 120 6)
+;;
+;; Resultado aproximado esperado:
+;; ((ROJO 40.0)
+;;  (VERDE 53.333336)
+;;  (AMARILLO 2.6666667)
+;;  (AMARILLO-INTERMITENTE 4.0))
+
+
+;; Entrada no numérica:
+;;
+;; (verificaciones 90 'verde 6)
+;;
+;; Resultado esperado:
+;; ERROR-DURACION-NO-NUMERICA
+
+
+;; Tiempo de intermitencia igual a cero:
+;;
+;; (verificaciones 90 120 6 0)
+;;
+;; Resultado esperado:
+;; ERROR-DURACION-NO-POSITIVA
