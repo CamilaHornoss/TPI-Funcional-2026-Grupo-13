@@ -21,15 +21,15 @@
 
            ((and(equal color-Actual 'en-Rojo)(equal cambiar-A 'Verde)) 
 
-                 (list color-Actual "cambiar-a-Verde")) 
+                 (list color-Actual "cambiar-a-verde")) 
 
             ((and (equal color-Actual 'en-Verde)(equal cambiar-A 'Amarillo)) 
 
-                  (list color-Actual "cambiar-a-Amarillo")) 
+                  (list color-Actual "cambiar-a-amarillo")) 
 
              ((and (equal color-Actual 'en-Amarillo)(equal cambiar-A 'Rojo)) 
 
-                   (list color-Actual "cambiar-a-Rojo")) 
+                   (list color-Actual "cambiar-a-rojo")) 
 
              (t(list color-Actual 'accion-por-defecto))) 
      )
@@ -39,15 +39,15 @@
 
 ;; Cambio normal de rojo a verde:
 ;; (transicion 'en-rojo 'Verde)
-;; Resultado esperado: (EN-ROJO "cambiar-a-Verde")
+;; Resultado esperado: (EN-ROJO "cambiar-a-verde")
 
 ;; Cambio normal de verde a amarillo:
 ;; (transicion 'en-Verde 'Amarillo)
-;; Resultado esperado: (EN-VERDE "cambiar-a-Amarillo")
+;; Resultado esperado: (EN-VERDE "cambiar-a-amarillo")
 
 ;; Cambio normal de amarillo a rojo:
 ;; (transicion 'en-amarillo 'Rojo)
-;; Resultado esperado: (EN-AMARILLO "cambiar-a-Rojo")
+;; Resultado esperado: (EN-AMARILLO "cambiar-a-rojo")
 
 ;; Cambio no permitido:
 ;; (transicion 'en-rojo 'amarillo)
@@ -57,5 +57,7 @@
 ;; (transicion 'celeste 'Rojo)
 ;; Resultado esperado: (CELESTE ACCION-POR-DEFECTO)
 
-    
+;; Ejemplo que genera error por falta de argumentos:
+;; (transicion 'en-rojo)
+;; Resultado esperado: error por falta del argumento CAMBIAR-A    
 
