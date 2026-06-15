@@ -19,9 +19,9 @@
                        (tiempo-verde 120)
                        (tiempo-amarillo 6))
   (cond
-    ((or (not (numberp tiempo-rojo))
-         (not (numberp tiempo-verde))
-         (not (numberp tiempo-amarillo)))
+    ((or (not (realp tiempo-rojo))
+         (not (realp tiempo-verde))
+         (not (realp tiempo-amarillo)))
      'error-tiempos-no-numericos)
 
     ((or (<= tiempo-rojo 0)
@@ -47,7 +47,7 @@
 
 (defun recomendacion-ciclo (duracion)
   (cond
-    ((not (numberp duracion))
+    ((not (realp duracion))
      'error-duracion-no-numerica)
 
     ((<= duracion 0)
