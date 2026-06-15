@@ -26,6 +26,7 @@
 ;; Calcular la cantidad total de segundos que corresponde a
 ;; cada color durante una hora, considerando los ciclos
 ;; completos y el tiempo restante.
+;; El período de una hora se analiza comenzando desde el estado rojo.
 ;; ========================================================
 
 (defun distribucion-una-hora
