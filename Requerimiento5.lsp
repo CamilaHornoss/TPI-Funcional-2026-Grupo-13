@@ -25,7 +25,9 @@
      'error-minutos-negativos)
 
     (t
-     (floor
+     (nth-value
+      0
+      (floor
        (/ (* minutos 60)
           (duracion-ciclo))))))
 
