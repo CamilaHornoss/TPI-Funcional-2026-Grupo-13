@@ -15,8 +15,9 @@
 ;; ========================================================
 (defun duracion-ciclo (&optional
                        (tiempo-rojo 90)
-                       (tiempo-amarillo 6)
                        (tiempo-verde 120))
+                       (tiempo-amarillo 6)
+                      
   (cond
     ((or (not (numberp tiempo-rojo))
          (not (numberp tiempo-amarillo))
