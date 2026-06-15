@@ -1,65 +1,104 @@
 ;; ========================================================
 ;; REQUERIMIENTO 1: TRANSICIÓN DE ESTADOS DEL SEMÁFORO
+;; ITERACIÓN 2: INTERMITENCIA DE SEGURIDAD
 ;; ========================================================
 
 ;; ========================================================
 ;; FUNCIÓN: transicion
 ;; NATURALEZA: Pura
-;; ESTRATEGIA DE CONTROL: Eleccion multiple mediante el uso del condicional COND
+;; ESTRATEGIA DE CONTROL: Elección múltiple mediante COND
 ;; IMPACTO EN MEMORIA: No destructiva
 ;; PROPÓSITO:
-;;La funcion tiene como proposito determinar la accion a realizar
-;;en base a su estado actual y al estado al que se quiere cambiar.
-;;La misma, nos devuelve una lista con el estado actual y la accion a realizar,
-;;si dicha accion no esta definida dentro de las opciones disponible en el 
-;;COND devuelve una lista con el estado actual y la accion por defecto.
+;; Determinar la acción correspondiente a una transición,
+;; incluyendo el estado amarillo intermitente de seguridad.
+;; El ciclo sigue el orden:
+;; rojo → amarillo-intermitente → verde →
+;; amarillo-intermitente → amarillo →
+;; amarillo-intermitente.
 ;; ========================================================
 
+(defun transicion (color-actual cambiar-a)
+  (cond
+    ((and (equal color-actual 'en-rojo)
+          (equal cambiar-a 'amarillo-intermitente))
+     (list color-actual
+           "cambiar-a-amarillo-intermitente"))
 
+    ((and (equal color-actual 'amarillo-intermitente)
+          (equal cambiar-a 'verde))
+     (list color-actual
+           "cambiar-a-verde"))
 
+    ((and (equal color-actual 'en-verde)
+          (equal cambiar-a 'amarillo-intermitente))
+     (list color-actual
+           "cambiar-a-amarillo-intermitente"))
 
-(defun transicion (color-Actual cambiar-A) 
-  (cond 
-    ((and (equal color-Actual 'en-Rojo) (equal cambiar-A 'Amarillo-Intermitente)) 
-     (list color-Actual "cambiar-a-Amarillo-Intermitente")) 
+    ((and (equal color-actual 'amarillo-intermitente)
+          (equal cambiar-a 'amarillo))
+     (list color-actual
+           "cambiar-a-amarillo"))
 
-    ((and (equal color-Actual 'Amarillo-Intermitente) (equal cambiar-A 'Verde)) 
-     (list color-Actual "cambiar-a-Verde")) 
+    ((and (equal color-actual 'en-amarillo)
+          (equal cambiar-a 'amarillo-intermitente))
+     (list color-actual
+           "cambiar-a-amarillo-intermitente"))
 
-    ((and (equal color-Actual 'en-Verde) (equal cambiar-A 'Amarillo-Intermitente)) 
-     (list color-Actual "cambiar-a-Amarillo-Intermitente")) 
+    ((and (equal color-actual 'amarillo-intermitente)
+          (equal cambiar-a 'rojo))
+     (list color-actual
+           "cambiar-a-rojo"))
 
-    ((and (equal color-Actual 'Amarillo-Intermitente) (equal cambiar-A 'Amarillo)) 
-     (list color-Actual "cambiar-a-Amarillo")) 
+    (t
+     (list color-actual 'accion-por-defecto))))
 
-    ((and (equal color-Actual 'en-Amarillo) (equal cambiar-A 'Amarillo-Intermitente)) 
-     (list color-Actual "cambiar-a-Amarillo-Intermitente")) 
-
-    ((and (equal color-Actual 'Amarillo-Intermitente) (equal cambiar-A 'Rojo)) 
-     (list color-Actual "cambiar-a-Rojo")) 
-
-    (t (list color-Actual 'accion-por-defecto))))
 
 ;; ========================================================
-;; EJEMPLOS DE USO DE LA FUNCION TRANSICION
+;; EJEMPLOS DE USO DEL REQUERIMIENTO 1
 ;; ========================================================
 
-;; Cambio normal de rojo a verde:
-;; (transicion 'en-rojo 'Verde)
-;; Resultado esperado: (EN-ROJO CAMBIAR-A-VERDE)
+;; De rojo a amarillo intermitente:
+;; (transicion 'en-rojo 'amarillo-intermitente)
+;; Resultado esperado:
+;; (EN-ROJO "cambiar-a-amarillo-intermitente")
 
-;; Cambio normal de verde a amarillo:
-;; (transicion 'en-Verde 'Amarillo)
-;; Resultado esperado: (EN-VERDE CAMBIAR-A-AMARILLO)
+;; De amarillo intermitente a verde:
+;; (transicion 'amarillo-intermitente 'verde)
+;; Resultado esperado:
+;; (AMARILLO-INTERMITENTE "cambiar-a-verde")
 
-;; Cambio normal de amarillo a rojo:
-;; (transicion 'en-amarillo 'Rojo)
-;; Resultado esperado: (EN-AMARILLO CAMBIAR-A-ROJO)
+;; De verde a amarillo intermitente:
+;; (transicion 'en-verde 'amarillo-intermitente)
+;; Resultado esperado:
+;; (EN-VERDE "cambiar-a-amarillo-intermitente")
 
-;; Cambio no permitido:
-;; (transicion 'en-rojo 'amarillo)
-;; Resultado esperado: (EN-ROJO ACCION-POR-DEFECTO)
+;; De amarillo intermitente a amarillo:
+;; (transicion 'amarillo-intermitente 'amarillo)
+;; Resultado esperado:
+;; (AMARILLO-INTERMITENTE "cambiar-a-amarillo")
+
+;; De amarillo a amarillo intermitente:
+;; (transicion 'en-amarillo 'amarillo-intermitente)
+;; Resultado esperado:
+;; (EN-AMARILLO "cambiar-a-amarillo-intermitente")
+
+;; De amarillo intermitente a rojo:
+;; Esta transición inicia el ciclo siguiente.
+;; (transicion 'amarillo-intermitente 'rojo)
+;; Resultado esperado:
+;; (AMARILLO-INTERMITENTE "cambiar-a-rojo")
+
+;; Camino no permitido:
+;; (transicion 'en-rojo 'verde)
+;; Resultado esperado:
+;; (EN-ROJO ACCION-POR-DEFECTO)
 
 ;; Estado no reconocido:
-;; (transicion 'celeste 'Rojo)
-;; Resultado esperado: (CELESTE ACCION-POR-DEFECTO)
+;; (transicion 'celeste 'rojo)
+;; Resultado esperado:
+;; (CELESTE ACCION-POR-DEFECTO)
+
+;; Ejemplo que genera error por falta de argumentos:
+;; (transicion 'en-rojo)
+;; Resultado esperado:
+;; error por falta del argumento CAMBIAR-A
