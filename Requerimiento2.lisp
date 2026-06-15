@@ -1,15 +1,19 @@
 ;; ========================================================
+;; REQUERIMIENTO 2: TEMPORIZADOR AUTOMÁTICO
+;; ========================================================
+
+;; ========================================================
 ;; FUNCIÓN: timer
 ;; NATURALEZA: Pura
-;; ESTRATEGIA DE CONTROL: seleccion multiple mediante el condicional COND
+;; ESTRATEGIA DE CONTROL: selección múltiple mediante el condicional COND
 ;; IMPACTO EN MEMORIA: No destructiva
 ;; PROPÓSITO:
 ;; Determinar el estado en el que se encuentra el semáforo
 ;; para un tiempo dado. La función calcula el estado 
-;; del semaforo dentro de un ciclo de 216 segundos.
-;; El calculo se realiza mediante la operación módulo y,
+;; del semáforo dentro de un ciclo de 216 segundos.
+;; El cálculo se realiza mediante la operación módulo y,
 ;; según el intervalo correspondiente, devuelve EN-ROJO, 
-;; EN-VERDE o EN-AMARILLO.Dicho ciclo se repite indefinidamente
+;; EN-VERDE o EN-AMARILLO. Dicho ciclo se repite indefinidamente
 ;; cada 216 segundos.
 ;; ========================================================
 
@@ -45,7 +49,7 @@
 ;; (timer 209)
 ;; Resultado esperado: EN-VERDE
 
-;; Primer valor del intervalo  amarillo:
+;; Primer valor del intervalo amarillo:
 ;; (timer 210)
 ;; Resultado esperado: EN-AMARILLO
 
@@ -67,4 +71,4 @@
 
 ;; Ejemplo que genera error controlado:
 ;; (timer 'Rojo)
-;;Resultado esperado: Error
+;; Resultado esperado: ERROR
