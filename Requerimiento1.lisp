@@ -31,7 +31,7 @@
 
                    (list color-Actual "cambiar-a-Rojo")) 
 
-             (t(list color-Actual "accion-por-defecto"))) 
+             (t(list color-Actual 'accion-por-defecto))) 
      )
 ;; ========================================================
 ;; EJEMPLOS DE USO DE LA FUNCIÓN TRANSICION
@@ -51,11 +51,11 @@
 
 ;; Cambio no permitido:
 ;; (transicion 'en-rojo 'amarillo)
-;; Resultado esperado: (EN-ROJO "accion-por-defecto")
+;; Resultado esperado: (EN-ROJO ACCION-POR-DEFECTO)
 
 ;; Estado no reconocido:
 ;; (transicion 'celeste 'Rojo)
-;; Resultado esperado: (CELESTE "accion-por-defecto")
+;; Resultado esperado: (CELESTE ACCION-POR-DEFECTO)
 
     
 
