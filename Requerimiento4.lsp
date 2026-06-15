@@ -6,44 +6,45 @@
 ;; ========================================================
 ;; FUNCIÓN: duracion-ciclo
 ;; NATURALEZA: Pura
-;; ESTRATEGIA DE CONTROL: Función simple
+;; ESTRATEGIA DE CONTROL: Función no recursiva con COND
 ;; IMPACTO EN MEMORIA: No destructiva
 ;; PROPÓSITO:
 ;; Calcular la duración total de un ciclo completo:
 ;; rojo → verde → amarillo.
 ;; El ciclo finaliza al terminar el estado amarillo.
 ;; ========================================================
+
 (defun duracion-ciclo (&optional
                        (tiempo-rojo 90)
-                       (tiempo-verde 120))
-                       (tiempo-amarillo 6)
-                      
+                       (tiempo-verde 120)
+                       (tiempo-amarillo 6))
   (cond
     ((or (not (numberp tiempo-rojo))
-         (not (numberp tiempo-amarillo))
-         (not (numberp tiempo-verde)))
+         (not (numberp tiempo-verde))
+         (not (numberp tiempo-amarillo)))
      'error-tiempos-no-numericos)
 
     ((or (<= tiempo-rojo 0)
-         (<= tiempo-amarillo 0)
-         (<= tiempo-verde 0))
+         (<= tiempo-verde 0)
+         (<= tiempo-amarillo 0))
      'error-tiempos-no-positivos)
 
     (t
      (+ tiempo-rojo
-        tiempo-amarillo
-        tiempo-verde))))
+        tiempo-verde
+        tiempo-amarillo))))
 
 
 ;; ========================================================
 ;; FUNCIÓN: recomendacion-ciclo
 ;; NATURALEZA: Pura
-;; ESTRATEGIA DE CONTROL: Función condicional
+;; ESTRATEGIA DE CONTROL: Función no recursiva con COND
 ;; IMPACTO EN MEMORIA: No destructiva
 ;; PROPÓSITO:
 ;; Evaluar la duración de un ciclo según el rango recomendado
 ;; de 35 a 150 segundos.
 ;; ========================================================
+
 (defun recomendacion-ciclo (duracion)
   (cond
     ((not (numberp duracion))
@@ -75,10 +76,10 @@
 ;; Resultado esperado: REDUCIR-DURACION-DEL-CICLO
 
 ;; Camino alternativo: ciclo dentro del rango recomendado:
-;; (duracion-ciclo 50 5 60)
+;; (duracion-ciclo 50 60 5)
 ;; Resultado esperado: 115
 ;;
-;; (recomendacion-ciclo (duracion-ciclo 50 5 60))
+;; (recomendacion-ciclo (duracion-ciclo 50 60 5))
 ;; Resultado esperado: DURACION-OPTIMA
 
 ;; Camino alternativo: ciclo demasiado corto:
@@ -101,9 +102,9 @@
 ;; Resultado esperado: ERROR-DURACION-NO-POSITIVA
 
 ;; Ejemplo que genera error controlado: tiempo no numérico:
-;; (duracion-ciclo 90 'seis 120)
+;; (duracion-ciclo 90 'ciento-veinte 6)
 ;; Resultado esperado: ERROR-TIEMPOS-NO-NUMERICOS
 
 ;; Ejemplo que genera error controlado: tiempo igual a cero:
-;; (duracion-ciclo 90 0 120)
+;; (duracion-ciclo 90 0 6)
 ;; Resultado esperado: ERROR-TIEMPOS-NO-POSITIVOS
