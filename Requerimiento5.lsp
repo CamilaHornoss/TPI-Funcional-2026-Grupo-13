@@ -18,7 +18,7 @@
 ;; ========================================================
 (defun ciclos-por-tiempo (minutos)
   (cond
-    ((not (numberp minutos))
+    ((not (realp minutos))
      'error-minutos-no-numericos)
 
     ((< minutos 0)
