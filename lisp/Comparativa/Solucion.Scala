@@ -1,138 +1,138 @@
 // Se utiliza el objeto Semaforo para agrupar las funciones relacionadas
 // con el comportamiento del semáforo y mejorar la organización del código.
+
 object Semaforo {
-// ========================================================
-// REQUERIMIENTO 1: TRANSICIÓN DE ESTADOS DEL SEMÁFORO
-// ========================================================
 
-// ========================================================
-// FUNCIÓN: transicion
-// NATURALEZA: Pura
-// ESTRATEGIA DE CONTROL: Elección múltiple mediante MATCH
-// IMPACTO EN MEMORIA: No destructiva
-// PROPÓSITO:
-// La función tiene como propósito determinar el siguiente
-// estado del semáforo en base al color actual.
-// Devuelve el color correspondiente a la siguiente transición.
-// Si el color ingresado no es válido, devuelve "accion-por-defecto".
-// ========================================================
+  // ========================================================
+  // REQUERIMIENTO 1: TRANSICIÓN DE ESTADOS DEL SEMÁFORO
+  // ========================================================
 
-  def transicion(colorActual: String, cambiarA: String): (String, String) = {
+  // ========================================================
+  // FUNCIÓN: transicion
+  // NATURALEZA: Pura
+  // ESTRATEGIA DE CONTROL: Elección múltiple mediante MATCH
+  // IMPACTO EN MEMORIA: No destructiva
+  // PROPÓSITO:
+  // Determinar la acción que debe realizar el semáforo según
+  // el estado actual y el color al que se desea cambiar.
+  // Devuelve una tupla formada por el estado actual y la acción.
+  // Si la transición no es válida, devuelve "accion-por-defecto".
+  // ========================================================
 
-    (colorActual, cambiarA) match { //ocupamos match, ya que su uso es similar al cond en lisp
-    
-    //Cada case va comparando si los valores recibidos en el match coinciden con el patrón definido. 
-    //Cuando encuentra una coincidencia, ejecuta el código asociado y deja de evaluar los demás casos.
-      
+  def transicion(
+      colorActual: String,
+      cambiarA: String
+  ): (String, String) = {
+
+    (colorActual, cambiarA) match {
+
+      // Cada case compara los valores recibidos con un patrón.
+      // Cuando encuentra una coincidencia, devuelve el resultado
+      // asociado y deja de evaluar los demás casos.
+
       case ("en-Rojo", "Verde") =>
-        ("en-Rojo", "cambiar-a-Verde")
+        ("en-Rojo", "cambiar-a-verde")
 
       case ("en-Verde", "Amarillo") =>
-        ("en-Verde", "cambiar-a-Amarillo")
+        ("en-Verde", "cambiar-a-amarillo")
 
       case ("en-Amarillo", "Rojo") =>
-        ("en-Amarillo", "cambiar-a-Rojo")
+        ("en-Amarillo", "cambiar-a-rojo")
 
       case _ =>
         (colorActual, "accion-por-defecto")
     }
-  } 
+  }
 
-// ========================================================
-// FUNCIÓN: timer
-// NATURALEZA: Pura
-// ESTRATEGIA DE CONTROL: Selección múltiple mediante IF/ELSE
-// IMPACTO EN MEMORIA: No destructiva
-// PROPÓSITO:
-// Determinar el color del semáforo en función del tiempo
-// transcurrido dentro del ciclo.
-// Devuelve "Rojo", "Verde" o "Amarillo" según corresponda.
-// ========================================================
-  def timer(tiempo: Int): String = { //define a tiempo como un entero
-    if (tiempo < 0) //verifica que no sea un valor negativo (trabajamos con enteros positivos)
+  // ========================================================
+  // REQUERIMIENTO 2: TEMPORIZADOR AUTOMÁTICO
+  // ========================================================
+
+  // ========================================================
+  // FUNCIÓN: timer
+  // NATURALEZA: Pura
+  // ESTRATEGIA DE CONTROL: Selección múltiple mediante IF/ELSE
+  // IMPACTO EN MEMORIA: No destructiva
+  // PROPÓSITO:
+  // Determinar el color del semáforo en función del tiempo
+  // transcurrido dentro del ciclo.
+  // Devuelve "en-Rojo", "en-Verde" o "en-Amarillo".
+  // ========================================================
+
+  def timer(tiempo: Int): String = {
+
+    if (tiempo < 0) {
       "Error"
+    } else {
+      // Val define una variable inmutable.
+      val ciclo = tiempo % 216
 
-    else {
-    //Se crea una variable inmutable llamada ciclo mediante la palabra reservada val. 
-    //A esta variable se le asigna el resto de la división entre tiempo y 216, utilizando el operador módulo %.
-      val ciclo = tiempo % 216 //
-     // Las estructuras if/else comparan el valor de ciclo con los límites de cada intervalo 
-     //para determinar si el semáforo debe estar en rojo, verde o amarillo.
-      if (ciclo < 90) "en-Rojo"
-      else if (ciclo < 210) "en-Verde"
-      else "en-Amarillo"
+      if (ciclo < 90) {
+        "en-Rojo"
+      } else if (ciclo < 210) {
+        "en-Verde"
+      } else {
+        "en-Amarillo"
+      }
     }
   }
 }
 
 // ========================================================
-// EJEMPLOS DE USO DE LA FUNCIÓN TRANSICION
+// EJEMPLOS DE USO
 // ========================================================
 
-// Cambio normal de rojo a verde:
-// transicion("en-Rojo", "Verde")
-// Resultado esperado: ("en-Rojo", "cambiar-a-Verde")
+// Semaforo.transicion("en-Rojo", "Verde")
+// Resultado esperado: ("en-Rojo", "cambiar-a-verde")
 
-// Cambio normal de verde a amarillo:
-// transicion("en-Verde", "Amarillo")
-// Resultado esperado: ("en-Verde", "cambiar-a-Amarillo")
+// Semaforo.transicion("en-Verde", "Amarillo")
+// Resultado esperado: ("en-Verde", "cambiar-a-amarillo")
 
-// Cambio normal de amarillo a rojo:
-// transicion("en-Amarillo", "Rojo")
-// Resultado esperado: ("en-Amarillo", "cambiar-a-Rojo")
+// Semaforo.transicion("en-Amarillo", "Rojo")
+// Resultado esperado: ("en-Amarillo", "cambiar-a-rojo")
 
-// Cambio no permitido:
-// transicion("en-Rojo", "Amarillo")
+// Semaforo.transicion("en-Rojo", "Amarillo")
 // Resultado esperado: ("en-Rojo", "accion-por-defecto")
 
-// Estado no reconocido:
-// transicion("Celeste", "Rojo")
+// Semaforo.transicion("Celeste", "Rojo")
 // Resultado esperado: ("Celeste", "accion-por-defecto")
 
-// ========================================================
-// EJEMPLOS DE USO DE TIMER
-// ========================================================
-
-// Tiempo dentro del intervalo rojo:
-// timer(35)
+// Semaforo.timer(35)
 // Resultado esperado: "en-Rojo"
 
-// Último valor del intervalo rojo:
-// timer(89)
-// Resultado esperado: "en-Rojo"
-
-// Primer valor del intervalo verde:
-// timer(90)
+// Semaforo.timer(90)
 // Resultado esperado: "en-Verde"
 
-// Tiempo dentro del intervalo verde:
-// timer(145)
-// Resultado esperado: "en-Verde"
-
-// Último valor del intervalo verde:
-// timer(209)
-// Resultado esperado: "en-Verde"
-
-// Primer valor del intervalo amarillo:
-// timer(210)
+// Semaforo.timer(210)
 // Resultado esperado: "en-Amarillo"
 
-// Tiempo dentro del intervalo amarillo:
-// timer(213)
-// Resultado esperado: "en-Amarillo"
-
-// Inicio de un nuevo ciclo:
-// timer(216)
+// Semaforo.timer(216)
 // Resultado esperado: "en-Rojo"
 
-// Tiempo mayor a un ciclo completo:
-// timer(220)
-// Resultado esperado: "en-Rojo"
+// Semaforo.timer(543)
+// Resultado esperado: "en-Verde"
 
-// Varios ciclos después:
-// timer(543)
-// Resultado esperado: "en-Verde"   // porque 543 % 216 = 111
-
-// Ejemplo que genera error controlado:
-// timer(-1)
+// Semaforo.timer(-1)
 // Resultado esperado: "Error"
+
+// ========================================================
+// EJECUCIÓN DE PRUEBAS
+// ========================================================
+
+object PruebasSemaforo {
+
+  def main(args: Array[String]): Unit = {
+
+    println(Semaforo.transicion("en-Rojo", "Verde"))
+    println(Semaforo.transicion("en-Verde", "Amarillo"))
+    println(Semaforo.transicion("en-Amarillo", "Rojo"))
+    println(Semaforo.transicion("en-Rojo", "Amarillo"))
+
+    println(Semaforo.timer(35))
+    println(Semaforo.timer(90))
+    println(Semaforo.timer(210))
+    println(Semaforo.timer(216))
+    println(Semaforo.timer(543))
+    println(Semaforo.timer(-1))
+  }
+}
