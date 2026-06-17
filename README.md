@@ -134,68 +134,6 @@ El archivo principal carga la librería externa mediante:
 (ql:quickload :local-time)
 ```
 
-## Ejemplos de uso
-
-### Transición de estado
-
-```lisp
-(transicion 'en-rojo 'verde)
-```
-
-Resultado esperado:
-
-```lisp
-(EN-ROJO "cambiar-a-verde")
-```
-
-### Temporizador
-
-```lisp
-(timer 90)
-```
-
-Resultado esperado:
-
-```lisp
-EN-VERDE
-```
-
-### Duración del ciclo
-
-```lisp
-(duracion-ciclo)
-```
-
-Resultado esperado:
-
-```lisp
-216
-```
-
-### Recomendación del ciclo
-
-```lisp
-(recomendacion-ciclo (duracion-ciclo))
-```
-
-Resultado esperado:
-
-```lisp
-REDUCIR-DURACION-DEL-CICLO
-```
-
-### Ciclos completos en quince minutos
-
-```lisp
-(ciclos-por-tiempo 15)
-```
-
-Resultado esperado:
-
-```lisp
-4
-```
-
 ## Informe técnico
 
 El informe técnico completo se encuentra en:
@@ -220,14 +158,14 @@ El informe incluye:
 La declaración individual de cada integrante se encuentra en:
 
 ```text
-docs/HONOR.md
+docs/HONOR.pdf
 ```
 
 ## Video de defensa
 
 El video de demostración técnica se encuentra disponible en:
 
-[Ver video en YouTube](PEGAR-ENLACE-AQUI)
+[Ver video en YouTube](https://www.youtube.com/watch?v=kLVycXynRVk&t=2s)
 
 ## Estado del proyecto
 
