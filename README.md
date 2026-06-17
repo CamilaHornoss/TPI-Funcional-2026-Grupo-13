@@ -14,7 +14,7 @@ Functional Programming Integrative Project developed in Common Lisp, with `local
 ![Quicklisp](https://img.shields.io/badge/Quicklisp-6C63FF?style=for-the-badge)
 ![local-time](https://img.shields.io/badge/local--time-00897B?style=for-the-badge)
 ![Academic Project](https://img.shields.io/badge/Academic%20Project-2026-1565C0?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-In%20Progress-F9A825?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Completado-43A047?style=for-the-badge)
 
 </p>
 
@@ -92,7 +92,7 @@ En este lenguaje se reimplementaron las funciones:
 El código correspondiente se encuentra en:
 
 ```text
-comparativa/solucion.scala
+comparativa/Solucion.scala
 ```
 
 ## Estructura del repositorio
