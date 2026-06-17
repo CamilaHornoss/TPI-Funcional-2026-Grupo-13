@@ -95,20 +95,6 @@ El código correspondiente se encuentra en:
 comparativa/Solucion.scala
 ```
 
-## Estructura del repositorio
-
-```text
-TPI-Funcional-2026-Grupo13/
-├── lisp/
-│   └── core.lisp
-├── comparativa/
-│   └── solucion.scala
-├── docs/
-│   ├── INFORME.pdf
-│   └── HONOR.md
-└── README.md
-```
-
 ## Requisitos
 
 Para ejecutar el proyecto se necesita:
