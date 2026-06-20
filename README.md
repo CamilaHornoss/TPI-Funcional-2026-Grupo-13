@@ -92,7 +92,7 @@ En este lenguaje se reimplementaron las funciones:
 El código correspondiente se encuentra en:
 
 ```text
-comparativa/Solucion.scala
+comparativa/solucion.scala
 ```
 
 ## Requisitos
@@ -144,7 +144,7 @@ El informe incluye:
 La declaración individual de cada integrante se encuentra en:
 
 ```text
-docs/HONOR.pdf
+docs/HONOR.md
 ```
 
 ## Video de defensa
